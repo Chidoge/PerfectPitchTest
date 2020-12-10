@@ -6,6 +6,10 @@
         color: $light-theme-text-dark;
 
         a {
+            &:link {
+                color: $light-theme-text;
+            }
+
             &:visited {
                 color: $light-theme-text;
             }
