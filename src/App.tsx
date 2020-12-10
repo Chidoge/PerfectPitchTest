@@ -2,6 +2,7 @@ import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Home from './containers/Home/Home'
 import PageWrapper from './containers/PageWrapper/PageWrapper'
+import Test from './containers/Test/Test'
 import './styles/main.scss'
 
 class App extends React.Component<any, any> {
@@ -9,20 +10,30 @@ class App extends React.Component<any, any> {
     state = {
         theme: 'LIGHT'
     }
-    
+
     render() {
         return (
-            <Router>
-                <Switch>
-                    <Route path="/">
-                        <PageWrapper theme={this.state.theme}>
-                            <Home />
-                        </PageWrapper>
-                    </Route>
-                    <Route path="/test">
-                    </Route>
-                </Switch>
-            </Router>
+            <div className="app-container">
+                <Router>
+                    <Switch>
+                        <Route path="/test">
+                            <PageWrapper theme={this.state.theme}>
+                                <Test />
+                            </PageWrapper>
+                        </Route>
+                        <Route path="/how">
+                            <PageWrapper theme={this.state.theme}>
+                                <Test />
+                            </PageWrapper>
+                        </Route>
+                        <Route exact path="/">
+                            <PageWrapper theme={this.state.theme}>
+                                <Home />
+                            </PageWrapper>
+                        </Route>
+                    </Switch>
+                </Router>
+            </div>
         )
     }
 }

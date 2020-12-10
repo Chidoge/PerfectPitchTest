@@ -5,3 +5,15 @@
 
 @import './containers/Home.scss';
 @import './containers/PageWrapper.scss';
+
+
+.app-container {
+    a {
+        text-decoration: none;
+        font-family: "Segoe UI";
+        outline: none;
+
+
+    }
+}
+
