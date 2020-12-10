@@ -1,0 +1,11 @@
+.app-header {
+    background-color: $light-theme-bg-lighter;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    .link-button {
+        cursor: pointer;
+        padding: 1rem;
+    }
+}
