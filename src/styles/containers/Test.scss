@@ -1,0 +1,31 @@
+.app-page-wrapper {
+    .test-page{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        .test-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            flex-direction: column;
+            .button {
+                width : 200px;
+            }
+            .choices {
+                width: 100px;
+            }
+        }
+        .options-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            align-self: flex-start;
+            .choices {
+                width: 100px;
+            }
+        }
+    }
+}
