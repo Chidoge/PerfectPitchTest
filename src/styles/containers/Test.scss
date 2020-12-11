@@ -1,0 +1,24 @@
+.app-page-wrapper {
+
+    .test-page{
+        display: flex;
+
+        &.container-flex-column-center {
+            justify-content: center;
+        }
+
+        .test-container {
+            width: 500px;
+            align-items: center;
+            text-align: center;
+            flex-direction: column;
+            padding: 0rem 2rem;
+        }
+
+        .options-container {
+            align-items: center;
+            flex-direction: column;
+            padding: 0rem 2rem;
+        }
+    }
+}
