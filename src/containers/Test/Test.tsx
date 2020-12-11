@@ -7,32 +7,31 @@ export default class Test extends React.Component<any, any> {
         this.state = {
             selectedNotes: ["C", "D"],
             selectedInstrument: "Piano",
-            noteChoices: [],
+            notes: [],
             instrumentChoices: []
         }
     }
 
     componentDidMount() {
-        var notes = [];
-        var instruments = [];
+        let notes = [];
+        let instruments = [];
 
-        for (var note of options.notes) {
+        for (let note of options.notes) {
             notes.push(<button className="choices" onClick={() => this.selectNote(note)}>{note}</button>);
         }
 
-        for (var instrument of options.instruments) {
+        for (let instrument of options.instruments) {
             instruments.push(<option value={instrument.toLowerCase()}>{instrument}</option>);
         }
 
-        this.setState({noteChoices: notes, instrumentChoices: instruments});
+        this.setState({notes, instrumentChoices: instruments});
     }
 
     selectNote(note: string) {
-        var array = [...this.state.selectedNotes];
-        var index = array.indexOf(note);
+        let array = this.state.selectedNotes.slice();
+        let index = array.indexOf(note);
 
-        if (index !== -1) {
-            //order array
+        if (index === -1) {
             array.push(note);
         }
         else {
@@ -43,12 +42,13 @@ export default class Test extends React.Component<any, any> {
     }
 
     render() {
-        const { instrumentChoices, noteChoices } = this.state
+        const { instrumentChoices, notes } = this.state
 
-        var selectedNotes = [];
+        let selectedNotes = [];
+        const ordered = this.state.selectedNotes.sort()
 
-        console.log(this.state.selectedNotes)
-        for (var selectedNote of this.state.selectedNotes) {
+        for (let selectedNote of ordered) {
+            
             selectedNotes.push(<button className="choices">{selectedNote}</button>);
         }
 
@@ -71,7 +71,7 @@ export default class Test extends React.Component<any, any> {
                         {instrumentChoices}
                     </select>
                     <p>Select the notes on which you would like to be tested</p>
-                    {noteChoices}
+                    {notes}
                 </div>
                 
             </div>
