@@ -1,3 +1,4 @@
+import { UPDATE_NOTES } from "../constants"
 import { ITestSettings } from "../interfaces"
 
 const initialState: ITestSettings = {
@@ -7,7 +8,7 @@ const initialState: ITestSettings = {
 const reducer = (state = initialState, action: any) => {
     switch(action.type) {
         case UPDATE_NOTES:
-            
+            return state
         default:
             return state
     }
