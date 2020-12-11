@@ -2,7 +2,6 @@ import cx from 'classnames'
 import React from 'react'
 
 const Button = (props:any) => {
-
     const { children, isHighlighted, onClick } = props
 
     return (
