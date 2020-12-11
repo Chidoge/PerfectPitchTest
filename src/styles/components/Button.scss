@@ -1,0 +1,11 @@
+.app-button {
+    border-radius: 5px;
+    border: none;
+    margin: 0.5rem;
+    padding: 0.5rem 1rem;
+    width: 100px;
+
+    &.highlighted {
+        background-color: #c4eebc;
+    }
+}
