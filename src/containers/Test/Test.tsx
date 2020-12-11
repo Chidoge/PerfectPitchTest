@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from '../../components/StyledComponents/Button/Button';
 import options from './options';
 
 export default class Test extends React.Component<any, any> {
@@ -17,7 +18,7 @@ export default class Test extends React.Component<any, any> {
         let instruments = [];
 
         for (let note of options.notes) {
-            notes.push(<button className="choices" onClick={() => this.selectNote(note)}>{note}</button>);
+            notes.push(<Button onClick={() => this.selectNote(note)}>{note}</Button>);
         }
 
         for (let instrument of options.instruments) {

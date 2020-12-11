@@ -1,9 +1,22 @@
 import React from 'react'
+import cx from 'classnames'
 
-export default class Button extends React.Component<any, any> {
-    render() {
-        return (
-            <button>Test</button>
-        )
-    }
+const Button = (props:any) => {
+
+    const { children, isHighlighted, onClick } = props
+
+    return (
+        <button 
+            className={cx({
+                "app-button": true,
+                "highlighted": isHighlighted
+            })}
+            onClick={onClick} >
+            {children}
+        </button>
+    )
+
+
 }
+
+export default Button
