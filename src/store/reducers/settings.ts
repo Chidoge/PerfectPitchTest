@@ -1,7 +1,6 @@
 import { ISettings } from "../interfaces"
 
 const initialState: ISettings = {
-    instrument: 'piano',
     personalBest: 0,
     theme: 'light'
 }

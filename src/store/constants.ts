@@ -1,1 +1,2 @@
-export const UPDATE_NOTES = "UPDATE_NOTES"
+export const UPDATE_NOTES = "UPDATE_NOTES";
+export const UPDATE_INSTRUMENT = "UPDATE_INSTRUMENT";
