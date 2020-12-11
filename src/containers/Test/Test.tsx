@@ -88,7 +88,6 @@ export default class Test extends React.Component<any, any> {
                         {notes}
                     </div>
                 </div>
-                
             </div>
         )
     }

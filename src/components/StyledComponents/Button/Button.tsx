@@ -1,5 +1,5 @@
-import React from 'react'
 import cx from 'classnames'
+import React from 'react'
 
 const Button = (props:any) => {
 
@@ -15,8 +15,6 @@ const Button = (props:any) => {
             {children}
         </button>
     )
-
-
 }
 
 export default Button
