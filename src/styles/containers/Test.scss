@@ -1,31 +1,24 @@
 .app-page-wrapper {
+
     .test-page{
         display: flex;
-        justify-content: center;
-        align-items: flex-start;
-        text-align: center;
-        .test-container {
-            display: flex;
+
+        &.container-flex-column-center {
             justify-content: center;
+        }
+
+        .test-container {
+            width: 500px;
             align-items: center;
             text-align: center;
             flex-direction: column;
-            .button {
-                width : 200px;
-            }
-            .choices {
-                width: 100px;
-            }
+            padding: 0rem 2rem;
         }
+
         .options-container {
-            display: flex;
-            justify-content: center;
             align-items: center;
             flex-direction: column;
-            align-self: flex-start;
-            .choices {
-                width: 100px;
-            }
+            padding: 0rem 2rem;
         }
     }
 }
