@@ -8,14 +8,12 @@ export default class Test extends React.Component<any, any> {
             selectedNotes: ["C", "D"],
             selectedInstrument: "Piano",
             noteChoices: [],
-            selectedNotesChoices: [],
             instrumentChoices: []
         }
     }
 
     componentDidMount() {
         var notes = [];
-        var selectedNotes = [];
         var instruments = [];
 
         for (var note of options.notes) {
@@ -26,36 +24,34 @@ export default class Test extends React.Component<any, any> {
             instruments.push(<option value={instrument.toLowerCase()}>{instrument}</option>);
         }
 
-        for (var selectedNote of this.state.selectedNotes) {
-            selectedNotes.push(<button className="choices">{selectedNote}</button>);
-        }
-
         this.setState({noteChoices: notes, instrumentChoices: instruments});
     }
 
     selectNote(note: string) {
-        var selectedNotes = [];
         var array = [...this.state.selectedNotes];
         var index = array.indexOf(note);
 
         if (index !== -1) {
-            array.splice(index, 1);
-            this.setState({selectedNotes: array})
-        }
-        else {
             //order array
             array.push(note);
         }
-        
+        else {
+            array.splice(index, 1);
+        }
+
+        this.setState({selectedNotes: array});
+    }
+
+    render() {
+        const { instrumentChoices, noteChoices } = this.state
+
+        var selectedNotes = [];
+
+        console.log(this.state.selectedNotes)
         for (var selectedNote of this.state.selectedNotes) {
             selectedNotes.push(<button className="choices">{selectedNote}</button>);
         }
 
-        this.setState({selectedNotesChoices: selectedNotes});
-    }
-
-    render() {
-        const { instrumentChoices, noteChoices, selectedNotesChoices } = this.state
         return (
             <div className="test-page">
                 <div className="test-container">
@@ -64,7 +60,7 @@ export default class Test extends React.Component<any, any> {
                     <button className="button">Hear Again</button>
                     <h1>Choices</h1>
                     <div>
-                        {selectedNotesChoices}
+                        {selectedNotes}
                     </div>
                     <button className="button">End Quiz</button>
                 </div>
