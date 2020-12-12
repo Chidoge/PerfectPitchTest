@@ -16,7 +16,9 @@ const reducer = (state = initialState, action: any) => {
                 selectedNotes.push(action.payload);
             }
             else {
-                selectedNotes.splice(index, 1);
+                if (state.selectedNotes.length > 1){
+                    selectedNotes.splice(index, 1);
+                }
             }
 
             return {

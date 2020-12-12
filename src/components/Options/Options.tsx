@@ -3,23 +3,8 @@ import Button from '../StyledComponents/Button/Button';
 import testOptions from './testingOptions';
 
 class Options extends React.Component<any, any> {
-    state = {
-        instrumentChoices: []
-    }
-
-    componentDidMount() {
-        let instruments = []
-
-        for (let instrument of testOptions.instruments) {
-            instruments.push(<option value={instrument.toLowerCase()} onClick={() => this.props.changeInstrument(instrument)}>{instrument}</option>)
-        }
-
-        this.setState({instrumentChoices: instruments})
-    }
-
     render() {
         const { ordered } = this.props
-        const { instrumentChoices } = this.state
 
         let notes = []
 
@@ -46,7 +31,9 @@ class Options extends React.Component<any, any> {
                 <h1>Options</h1>
                 <p>Select the instrument which you would like played</p>
                 <select name="instruments">
-                    {instrumentChoices}
+                    {testOptions.instruments.map(instrument => (
+                        <option value={instrument.toLowerCase()} onClick={() => this.props.changeInstrument(instrument)}>{instrument}</option>
+                    ))}
                 </select>
                 <p>Select the notes on which you would like to be tested</p>
                 <div className="note-container">

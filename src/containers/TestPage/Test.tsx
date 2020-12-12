@@ -22,7 +22,7 @@ class Test extends React.Component<any, any> {
     render() {
         return (
             <div className="test-page container-flex-column-center">
-                <TestingSection ordered={this.props.selectedNotes.sort()} />
+                <TestingSection ordered={this.props.selectedNotes.sort()} instrument={this.props.instrument}/>
                 <Options ordered={this.props.selectedNotes.sort()} changeSelectedNotes={this.props.changeSelectedNotes}/>
             </div>
         )

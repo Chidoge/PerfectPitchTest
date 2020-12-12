@@ -1,25 +1,39 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Button from '../StyledComponents/Button/Button'
+import allNotes from './allNotes'
 
+interface IProps {
+    ordered: any[]
+    instrument: string
+}
 
-class TestingSection extends React.Component<any, any> {
-    state = {
-        selectedNotes: []
-    }
+class TestingSection extends React.Component<IProps, any> {
+    pickRandomNote = () => {
+        let selectedNotes = this.props.ordered.slice();
+        let randomIndex = Math.floor(Math.random() * selectedNotes.length)
+        let key = selectedNotes[randomIndex]
 
-    componentDidUpdate = () => {
-        let selectedNotes = []
+        key.replace("♯/", "#")
+        key.replace("♭", "b")
 
-        for (let selectedNote of this.props.ordered) {
-            selectedNotes.push(<Button>{selectedNote}</Button>)
-        }
+        let notes: string[] = []
 
-        this.setState(selectedNotes);
+        allNotes.Piano.forEach(fileNote => {
+            if (fileNote.startsWith(key) && key.includes('#') && fileNote.includes("#")) {
+                notes.push(fileNote)
+            }
+            else if (fileNote.startsWith(key) && !key.includes('#') && !fileNote.includes("#")) {
+                notes.push(fileNote)
+            }
+        })
+
+        randomIndex = Math.floor(Math.random() * selectedNotes.length)
+        return notes[randomIndex]
     }
 
     playAudio = () => {
-        let audio = new Audio('sounds/piano/A3.mp3')
+        let audio = new Audio(`sounds/Piano/${this.pickRandomNote()}`)
         audio.play()
     }
 
@@ -31,7 +45,9 @@ class TestingSection extends React.Component<any, any> {
                 <Button onClick={this.playAudio}>Hear Again</Button>
                 <h1>Choices</h1>
                 <div>
-                    {this.state.selectedNotes}
+                    {this.props.ordered.map(note => (
+                        <Button>{note}</Button>
+                    ))}
                 </div>
                 <Button className="button">End Quiz</Button>
             </div>
