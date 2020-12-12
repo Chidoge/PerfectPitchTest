@@ -9,6 +9,11 @@ interface IProps {
 }
 
 class TestingSection extends React.Component<IProps, any> {
+    state = {
+        currentNote: "",
+        nextQuestion: true
+    }
+
     pickRandomNote = () => {
         let selectedNotes = this.props.ordered.slice();
         let randomIndex = Math.floor(Math.random() * selectedNotes.length)
@@ -28,12 +33,18 @@ class TestingSection extends React.Component<IProps, any> {
             }
         })
 
-        randomIndex = Math.floor(Math.random() * selectedNotes.length)
+        randomIndex = Math.floor(Math.random() * notes.length)
         return notes[randomIndex]
     }
 
     playAudio = () => {
-        let audio = new Audio(`sounds/Piano/${this.pickRandomNote()}`)
+        let randomNote
+        if (this.state.nextQuestion) {
+            randomNote = this.pickRandomNote()
+            this.setState({ currentNote: randomNote, nextQuestion: false })
+        }
+
+        let audio = new Audio(`sounds/Piano/${this.state.nextQuestion ? randomNote : this.state.currentNote}`)
         audio.play()
     }
 
