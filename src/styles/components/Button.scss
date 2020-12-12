@@ -4,8 +4,19 @@
     margin: 0.5rem;
     padding: 0.5rem 1rem;
     width: 100px;
+    outline: none;
+    cursor: pointer;
+    background-color: $light-theme-bg;
+
+    &:hover {
+        background-color: $light-theme-bg-light;
+    }
 
     &.highlighted {
         background-color: #c4eebc;
+
+        &:hover {
+            background-color: #9dd392;
+        }
     }
 }
