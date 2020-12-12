@@ -1,4 +1,5 @@
 import React from 'react';
+import { formatNote } from '../../utility/notes';
 import Button from '../StyledComponents/Button/Button';
 import testOptions from './testingOptions';
 
@@ -15,14 +16,14 @@ class Options extends React.Component<any, any> {
             if (nextNote.charAt(0) === note) {
                 notes.push(
                     <div>
-                        <Button isHighlighted={ordered.includes(note)} onClick={() => this.props.changeSelectedNotes(note)}>{note}</Button>
-                        <Button isHighlighted={ordered.includes(nextNote)} onClick={() => this.props.changeSelectedNotes(nextNote)}>{nextNote}</Button>
+                        <Button isHighlighted={ordered.includes(note)} onClick={() => this.props.changeSelectedNotes(note)}>{formatNote(note)}</Button>
+                        <Button isHighlighted={ordered.includes(nextNote)} onClick={() => this.props.changeSelectedNotes(nextNote)}>{formatNote(nextNote)}</Button>
                     </div>
                 )
                 i++
             }
             else {
-                notes.push(<Button isHighlighted={ordered.includes(note)} onClick={() => this.props.changeSelectedNotes(note)}>{note}</Button>)
+                notes.push(<Button isHighlighted={ordered.includes(note)} onClick={() => this.props.changeSelectedNotes(note)}>{formatNote(note)}</Button>)
             }
         }
 
