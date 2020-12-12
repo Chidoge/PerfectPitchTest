@@ -13,8 +13,13 @@ class TestingSection extends React.Component<IProps, any> {
     state = {
         currentNote: "",
         nextQuestion: true,
+        questionIncorrectlyAnswered: false,
         correctAnswers: 0,
         totalAnswers: 0
+    }
+    
+    componentDidMount = () => {
+        this.playAudio()
     }
 
     pickRandomNote = () => {
@@ -46,9 +51,18 @@ class TestingSection extends React.Component<IProps, any> {
 
     pickAnswer = (note: string) => {
         if (checkFilenameCondition(note, this.state.currentNote)) {
-            this.setState({correctAnswers: this.state.correctAnswers + 1})
+            if (!this.state.questionIncorrectlyAnswered) {
+                this.setState({correctAnswers: this.state.correctAnswers + 1, nextQuestion: true, totalAnswers: this.state.totalAnswers + 1 })
+                this.playAudio()
+            }
+            else {
+                this.setState({ questionIncorrectlyAnswered: false, nextQuestion: true })
+                this.playAudio()
+            }
         }
-        this.setState({totalAnswers: this.state.totalAnswers + 1, nextQuestion: true})
+        else {
+            this.setState({ totalAnswers: !this.state.questionIncorrectlyAnswered ? this.state.totalAnswers + 1 : this.state.totalAnswers, questionIncorrectlyAnswered: true })
+        }
     }
 
     render() {
