@@ -69,7 +69,8 @@ class TestingSection extends React.Component<IProps, any> {
 
             if (checkFilenameCondition(note, this.state.currentNote)) {
                 if (this.state.questionCorrectlyAnswered) {
-                    this.setState({correctAnswers: this.state.correctAnswers + 1, totalAnswers: this.state.totalAnswers + 1, questionFinished: true })
+                    this.updateAnswerCount(1, 1)
+                    this.setState({ questionFinished: true })
                 }
                 else {
                     this.setState({ questionCorrectlyAnswered: true, questionFinished: true })
@@ -79,12 +80,32 @@ class TestingSection extends React.Component<IProps, any> {
                 selected.push({note: note, status: 'correct'})
             }
             else {
-                this.setState({ totalAnswers: this.state.questionCorrectlyAnswered ? this.state.totalAnswers + 1 : this.state.totalAnswers, questionCorrectlyAnswered: false })
+                this.setState({  questionCorrectlyAnswered: false })
+                this.updateAnswerCount(this.state.correctAnswers, this.state.questionCorrectlyAnswered ? 1 : 0)
                 //TODO: make this not push duplicates
                 selected.push({note: note, status: 'incorrect'})
             }
             
             this.setState({ currentSelectedNote: note, showAnswerFeedback: true, selectedAnswersStatus: selected });
+        }
+    }
+
+    updateAnswerCount = (addAmountCorrectAnswers: number, addAmountTotalAnswers: number) => {
+        this.setState({ correctAnswers: this.state.correctAnswers + addAmountCorrectAnswers, totalAnswers: this.state.totalAnswers + addAmountTotalAnswers })
+
+        let localCorrectAnswers = localStorage.getItem('correctAnswers')
+        let localTotalAnswers = localStorage.getItem('totalAnswers')
+
+        if (localCorrectAnswers !== null && localTotalAnswers !== null) {
+            let newCorrectAnswers = parseInt(localCorrectAnswers) + addAmountCorrectAnswers
+            let newTotalAnswers = parseInt(localTotalAnswers) + addAmountTotalAnswers
+
+            localStorage.setItem("correctAnswers", newCorrectAnswers.toString())
+            localStorage.setItem("totalAnswers", newTotalAnswers.toString())
+        }
+        else {
+            localStorage.setItem("correctAnswers", addAmountCorrectAnswers.toString())
+            localStorage.setItem("totalAnswers", addAmountTotalAnswers.toString())
         }
     }
 
@@ -120,6 +141,7 @@ class TestingSection extends React.Component<IProps, any> {
                         <Button status={this.checkArray(selectedAnswersStatus, note)} onClick={() => this.pickAnswer(note)}>{formatNote(note)}</Button>
                     ))}
                 </div>
+                { localStorage.getItem("totalAnswers") && <div>Total score: {localStorage.getItem("correctAnswers")} / {localStorage.getItem("totalAnswers")}</div> }
             </div>
         )
     }
