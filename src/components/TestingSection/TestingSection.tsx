@@ -80,8 +80,8 @@ class TestingSection extends React.Component<IProps, any> {
                 selected.push({note: note, status: 'correct'})
             }
             else {
+                this.updateAnswerCount(0, this.state.questionCorrectlyAnswered ? 1 : 0)
                 this.setState({  questionCorrectlyAnswered: false })
-                this.updateAnswerCount(this.state.correctAnswers, this.state.questionCorrectlyAnswered ? 1 : 0)
                 //TODO: make this not push duplicates
                 selected.push({note: note, status: 'incorrect'})
             }
@@ -115,8 +115,9 @@ class TestingSection extends React.Component<IProps, any> {
                 return element.status
             }
         }
-        return false
+        return ""
     }
+
     render() {
         let { correctAnswers, totalAnswers, questionCorrectlyAnswered, currentSelectedNote, showAnswerFeedback, selectedAnswersStatus, questionFinished } = this.state;
         return (
