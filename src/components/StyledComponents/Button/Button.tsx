@@ -2,13 +2,15 @@ import cx from 'classnames'
 import React from 'react'
 
 const Button = (props:any) => {
-    const { children, isHighlighted, onClick } = props
+    const { children, status, isHighlighted, onClick } = props
 
     return (
         <button 
             className={cx({
                 "app-button": true,
-                "highlighted": isHighlighted
+                "highlighted": isHighlighted,
+                "correct": status === 'correct',
+                "incorrect": status === 'incorrect'
             })}
             onClick={onClick} >
             {children}

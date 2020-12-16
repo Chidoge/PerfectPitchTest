@@ -13,10 +13,26 @@
     }
 
     &.highlighted {
+        background-color: #7e92e9;
+
+        &:hover {
+            background-color: #5a70d3;
+        }
+    }
+
+    &.correct {
         background-color: #c4eebc;
 
         &:hover {
             background-color: #9dd392;
+        }
+    }
+
+    &.incorrect {
+        background-color: #e64646;
+
+        &:hover {
+            background-color: #c41d1d;
         }
     }
 }

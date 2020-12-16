@@ -9,13 +9,22 @@ interface IProps {
     instrument: string
 }
 
+interface SelectedNoteButton {
+    note: string,
+    status: string
+}
+
 class TestingSection extends React.Component<IProps, any> {
     state = {
         currentNote: "",
+        currentSelectedNote: "",
         nextQuestion: true,
-        questionIncorrectlyAnswered: false,
+        questionCorrectlyAnswered: true,
+        questionFinished: false,
+        showAnswerFeedback: false,
         correctAnswers: 0,
-        totalAnswers: 0
+        totalAnswers: 0,
+        selectedAnswersStatus: []
     }
     
     componentDidMount = () => {
@@ -39,6 +48,11 @@ class TestingSection extends React.Component<IProps, any> {
         return notes[randomIndex]
     }
 
+    playNext = () => {
+        this.setState({ nextQuestion: true, questionFinished: false, showAnswerFeedback: false, selectedAnswersStatus: [] })
+        this.playAudio()
+    }
+
     playAudio = () => {
         let randomNote
         if (this.state.nextQuestion) {
@@ -50,32 +64,60 @@ class TestingSection extends React.Component<IProps, any> {
     }
 
     pickAnswer = (note: string) => {
-        if (checkFilenameCondition(note, this.state.currentNote)) {
-            if (!this.state.questionIncorrectlyAnswered) {
-                this.setState({correctAnswers: this.state.correctAnswers + 1, nextQuestion: true, totalAnswers: this.state.totalAnswers + 1 })
-                this.playAudio()
+        if (!this.state.questionFinished){
+            let selected: SelectedNoteButton[] = this.state.selectedAnswersStatus.slice()
+
+            if (checkFilenameCondition(note, this.state.currentNote)) {
+                if (this.state.questionCorrectlyAnswered) {
+                    this.setState({correctAnswers: this.state.correctAnswers + 1, totalAnswers: this.state.totalAnswers + 1, questionFinished: true })
+                }
+                else {
+                    this.setState({ questionCorrectlyAnswered: true, questionFinished: true })
+                }
+
+                //TODO: make this not push duplicates
+                selected.push({note: note, status: 'correct'})
             }
             else {
-                this.setState({ questionIncorrectlyAnswered: false, nextQuestion: true })
-                this.playAudio()
+                this.setState({ totalAnswers: this.state.questionCorrectlyAnswered ? this.state.totalAnswers + 1 : this.state.totalAnswers, questionCorrectlyAnswered: false })
+                //TODO: make this not push duplicates
+                selected.push({note: note, status: 'incorrect'})
             }
-        }
-        else {
-            this.setState({ totalAnswers: !this.state.questionIncorrectlyAnswered ? this.state.totalAnswers + 1 : this.state.totalAnswers, questionIncorrectlyAnswered: true })
+            
+            this.setState({ currentSelectedNote: note, showAnswerFeedback: true, selectedAnswersStatus: selected });
         }
     }
 
+    checkArray = (array: SelectedNoteButton[], note: string) => {
+        for (let element of array) {
+            if (note === element.note) {
+                return element.status
+            }
+        }
+        return false
+    }
     render() {
-        let { correctAnswers, totalAnswers } = this.state;
+        let { correctAnswers, totalAnswers, questionCorrectlyAnswered, currentSelectedNote, showAnswerFeedback, selectedAnswersStatus, questionFinished } = this.state;
         return (
             <div className="test-container container-flex-column-center">
                 <h1>Perfect Pitch Test</h1>
                 <div>Score: {correctAnswers} / {totalAnswers} correct</div>
-                <Button onClick={this.playAudio}>Hear Again</Button>
+                <div>
+                    { questionFinished && <Button onClick={this.playNext}>Hear Next</Button>}
+                    <Button onClick={this.playAudio}>Hear Again</Button>
+                </div>
+                {
+                    showAnswerFeedback ?
+                    (!questionCorrectlyAnswered 
+                    ? <p>Nope, "{ currentSelectedNote }" is not correct.</p>
+                    : <p>Nice! "{ currentSelectedNote }" is correct!</p>
+                    )
+                    : <br />
+                }
                 <h1>Choices</h1>
                 <div>
                     {this.props.ordered.map(note => (
-                        <Button onClick={() => this.pickAnswer(note)}>{formatNote(note)}</Button>
+                        <Button status={this.checkArray(selectedAnswersStatus, note)} onClick={() => this.pickAnswer(note)}>{formatNote(note)}</Button>
                     ))}
                 </div>
                 <Button className="button">End Quiz</Button>
