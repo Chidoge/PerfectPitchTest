@@ -104,7 +104,7 @@ class TestingSection extends React.Component<IProps, any> {
                 <div>Score: {correctAnswers} / {totalAnswers} correct</div>
                 <div>
                     { questionFinished && <Button onClick={this.playNext}>Hear Next</Button>}
-                    <Button onClick={this.playAudio}>Hear Again</Button>
+                    <Button onClick={this.playAudio}>Play Note</Button>
                 </div>
                 {
                     showAnswerFeedback ?
@@ -112,7 +112,7 @@ class TestingSection extends React.Component<IProps, any> {
                     ? <p>Nope, "{ currentSelectedNote }" is not correct.</p>
                     : <p>Nice! "{ currentSelectedNote }" is correct!</p>
                     )
-                    : <br />
+                    : <p className="hide-p">If you can see this, you're cool :)</p>
                 }
                 <h1>Choices</h1>
                 <div>
@@ -120,7 +120,6 @@ class TestingSection extends React.Component<IProps, any> {
                         <Button status={this.checkArray(selectedAnswersStatus, note)} onClick={() => this.pickAnswer(note)}>{formatNote(note)}</Button>
                     ))}
                 </div>
-                <Button className="button">End Quiz</Button>
             </div>
         )
     }
