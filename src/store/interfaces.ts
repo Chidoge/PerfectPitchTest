@@ -5,5 +5,6 @@ export interface ISettings {
 
 export interface ITestSettings {
     instrument: string
+    isQuestionCompleted: boolean
     selectedNotes: string[]
 }

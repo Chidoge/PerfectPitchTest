@@ -1,8 +1,9 @@
-import { UPDATE_INSTRUMENT, UPDATE_NOTES } from "../constants"
+import { UPDATE_INSTRUMENT, UPDATE_IS_QUESTION_COMPLETED, UPDATE_NOTES } from "../constants"
 import { ITestSettings } from "../interfaces"
 
 const initialState: ITestSettings = {
     instrument: 'Piano',
+    isQuestionCompleted: true,
     selectedNotes: ["C", "D"]
 }
 
@@ -29,6 +30,11 @@ const reducer = (state = initialState, action: any) => {
             return {
                 ...state,
                 instrument: action.payload
+            }
+        case UPDATE_IS_QUESTION_COMPLETED:
+            return {
+                ...state,
+                isQuestionCompleted: action.payload
             }
         default:
             return state

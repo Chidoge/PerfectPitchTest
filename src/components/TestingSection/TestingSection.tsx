@@ -7,28 +7,26 @@ import allNotes from './allNotes'
 interface IProps {
     ordered: any[]
     instrument: string
+    isQuestionCompleted: boolean
+    changeIsQuestionCompleted(i: boolean): any
 }
 
 interface SelectedNoteButton {
     note: string,
     status: string
 }
-
+ 
 class TestingSection extends React.Component<IProps, any> {
     state = {
         currentNote: "",
         currentSelectedNote: "",
+        testStarted: false,
         nextQuestion: true,
         questionCorrectlyAnswered: true,
-        questionFinished: false,
         showAnswerFeedback: false,
         correctAnswers: 0,
         totalAnswers: 0,
         selectedAnswersStatus: []
-    }
-    
-    componentDidMount = () => {
-        this.playAudio()
     }
 
     pickRandomNote = () => {
@@ -49,11 +47,17 @@ class TestingSection extends React.Component<IProps, any> {
     }
 
     playNext = () => {
-        this.setState({ nextQuestion: true, questionFinished: false, showAnswerFeedback: false, selectedAnswersStatus: [] })
+        this.setState({ nextQuestion: true, showAnswerFeedback: false, selectedAnswersStatus: [] })
+        this.props.changeIsQuestionCompleted(false)
         this.playAudio()
     }
 
     playAudio = () => {
+        if (!this.state.testStarted){
+            this.setState({ testStarted: true })
+            this.props.changeIsQuestionCompleted(false)
+        }
+
         let randomNote
         if (this.state.nextQuestion) {
             randomNote = this.pickRandomNote()
@@ -64,16 +68,17 @@ class TestingSection extends React.Component<IProps, any> {
     }
 
     pickAnswer = (note: string) => {
-        if (!this.state.questionFinished){
+        if (!this.props.isQuestionCompleted){
             let selected: SelectedNoteButton[] = this.state.selectedAnswersStatus.slice()
 
             if (checkFilenameCondition(note, this.state.currentNote)) {
                 if (this.state.questionCorrectlyAnswered) {
                     this.updateAnswerCount(1, 1)
-                    this.setState({ questionFinished: true })
+                    this.props.changeIsQuestionCompleted(true)
                 }
                 else {
-                    this.setState({ questionCorrectlyAnswered: true, questionFinished: true })
+                    this.setState({ questionCorrectlyAnswered: true })
+                    this.props.changeIsQuestionCompleted(true)
                 }
 
                 //TODO: make this not push duplicates
@@ -119,15 +124,21 @@ class TestingSection extends React.Component<IProps, any> {
     }
 
     render() {
-        let { correctAnswers, totalAnswers, questionCorrectlyAnswered, currentSelectedNote, showAnswerFeedback, selectedAnswersStatus, questionFinished } = this.state;
+        let { correctAnswers, totalAnswers, testStarted, questionCorrectlyAnswered, currentSelectedNote, showAnswerFeedback, selectedAnswersStatus } = this.state;
         return (
             <div className="test-container container-flex-column-center">
                 <h1>Perfect Pitch Test</h1>
                 <div>Score: {correctAnswers} / {totalAnswers} correct</div>
-                <div>
-                    { questionFinished && <Button onClick={this.playNext}>Hear Next</Button>}
+                {
+                    testStarted ?
+                    <div>
+                    { this.props.isQuestionCompleted && <Button onClick={this.playNext}>Hear Next</Button>}
                     <Button onClick={this.playAudio}>Play Note</Button>
-                </div>
+                    </div>
+                    :
+                    <Button onClick={this.playAudio}>Start Test</Button>
+                }
+               
                 {
                     showAnswerFeedback ?
                     (!questionCorrectlyAnswered 

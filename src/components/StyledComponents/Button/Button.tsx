@@ -2,7 +2,7 @@ import cx from 'classnames'
 import React from 'react'
 
 const Button = (props:any) => {
-    const { children, status, isHighlighted, onClick } = props
+    const { children, status, disabled, isHighlighted, onClick } = props
 
     return (
         <button 
@@ -12,6 +12,7 @@ const Button = (props:any) => {
                 "correct": status === 'correct',
                 "incorrect": status === 'incorrect'
             })}
+            disabled={disabled}
             onClick={onClick} >
             {children}
         </button>

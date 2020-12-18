@@ -5,7 +5,7 @@ import testOptions from './testingOptions';
 
 class Options extends React.Component<any, any> {
     render() {
-        const { ordered } = this.props
+        const { ordered, isQuestionCompleted } = this.props
 
         let notes = []
 
@@ -16,14 +16,14 @@ class Options extends React.Component<any, any> {
             if (nextNote.charAt(0) === note) {
                 notes.push(
                     <div>
-                        <Button isHighlighted={ordered.includes(note)} onClick={() => this.props.changeSelectedNotes(note)}>{formatNote(note)}</Button>
-                        <Button isHighlighted={ordered.includes(nextNote)} onClick={() => this.props.changeSelectedNotes(nextNote)}>{formatNote(nextNote)}</Button>
+                        <Button disabled={!isQuestionCompleted} isHighlighted={ordered.includes(note)} onClick={() => this.props.changeSelectedNotes(note)}>{formatNote(note)}</Button>
+                        <Button disabled={!isQuestionCompleted} isHighlighted={ordered.includes(nextNote)} onClick={() => this.props.changeSelectedNotes(nextNote)}>{formatNote(nextNote)}</Button>
                     </div>
                 )
                 i++
             }
             else {
-                notes.push(<Button isHighlighted={ordered.includes(note)} onClick={() => this.props.changeSelectedNotes(note)}>{formatNote(note)}</Button>)
+                notes.push(<Button disabled={!isQuestionCompleted} isHighlighted={ordered.includes(note)} onClick={() => this.props.changeSelectedNotes(note)}>{formatNote(note)}</Button>)
             }
         }
 

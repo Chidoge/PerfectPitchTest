@@ -1,4 +1,4 @@
-import { UPDATE_INSTRUMENT, UPDATE_NOTES } from "../constants"
+import { UPDATE_INSTRUMENT, UPDATE_IS_QUESTION_COMPLETED, UPDATE_NOTES } from "../constants"
 
 export const changeSelectedNotes = (note: string) => {
     return {
@@ -11,5 +11,12 @@ export const changeInstrument = (instrument: string) => {
     return  {
         type: UPDATE_INSTRUMENT,
         payload: instrument
+    }
+}
+
+export const changeIsQuestionCompleted = (isQuestionCompleted: boolean) => {
+    return  {
+        type: UPDATE_IS_QUESTION_COMPLETED,
+        payload: isQuestionCompleted
     }
 }
